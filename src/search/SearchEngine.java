@@ -36,8 +36,7 @@ public class SearchEngine {
         menu();
     }
 
-    private List<String> searchAll(String line) {
-        List<String> matches = new LinkedList<>();
+    private List<String> searchAll(List<String> matches, String line) {
         Set<Integer> indicesSet = new TreeSet<>();
         List<String> words = Arrays.asList(line.toLowerCase().split("\\s+"));
         words.forEach(word -> indicesSet.addAll(position.getOrDefault(word,
@@ -50,8 +49,7 @@ public class SearchEngine {
         return matches;
     }
 
-    private List<String> searchAny(String line) {
-        List<String> matches = new LinkedList<>();
+    private List<String> searchAny(List<String> matches, String line) {
         Set<Integer> indicesSet = new TreeSet<>();
         List<String> words = Arrays.asList(line.toLowerCase().split("\\s+"));
         words.forEach(word -> indicesSet.addAll(position.getOrDefault(word,
@@ -60,8 +58,7 @@ public class SearchEngine {
         return matches;
     }
 
-    private List<String> searchNONE(String line) {
-        List<String> matches = new LinkedList<>();
+    private List<String> searchNone(List<String> matches, String line) {
         Set<Integer> indicesSet = new TreeSet<>();
         List<String> words = Arrays.asList(line.toLowerCase().split("\\s+"));
         words.forEach(word -> indicesSet.addAll(position.getOrDefault(word,
@@ -81,18 +78,12 @@ public class SearchEngine {
         String strategy = sc.nextLine().toUpperCase();
         System.out.println("\nEnter a name or email to search all suitable people.");
         switch (strategy) {
-            case "ALL":
-                matches = searchAll(sc.nextLine());
-                break;
-            case "ANY":
-                matches = searchAny(sc.nextLine());
-                break;
-            case "NONE":
-                matches = searchNONE(sc.nextLine());
-                break;
+            case "ALL" -> searchAll(matches, sc.nextLine());
+            case "ANY" -> searchAny(matches, sc.nextLine());
+            case "NONE" -> searchNone(matches, sc.nextLine());
         }
         if (!(matches.size() == 0)) {
-            System.out.printf("%n%d persons found%n", matches.size());
+            System.out.printf("%n%d persons found:%n", matches.size());
             matches.forEach(person -> System.out.println(person));
         } else {
             System.out.println("No matching people found.");

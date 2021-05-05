@@ -1,4 +1,6 @@
+# Build files
 build/
 out/
 test/
 *.class
+*.iml
