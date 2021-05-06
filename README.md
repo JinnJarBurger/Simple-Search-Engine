@@ -12,4 +12,4 @@ line which contains any of the contents from the input, for instance: if the inp
 "NONE" makes sure it returns all the contents of the database excluding the contents of the input.
 ### Note
 The program takes command line argument for the location of the file/database used (at index 1 -> args[1]), if required the program can be modified to take files directly from the main
-class by uncommenting the line of code directly below the line "Scanner sc = new Scanner(new File(args[1]))" and mentioning the file path. 
+class by uncommenting the line of code directly below the line "Scanner sc = new Scanner(new File(args[1]))" and mentioning the file path. Use java version 13 or greater as the enchanced switch statement used demands it.
