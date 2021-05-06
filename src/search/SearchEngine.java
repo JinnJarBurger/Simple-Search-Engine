@@ -32,7 +32,6 @@ public class SearchEngine {
                 }
             });
         }
-        // printMap();
         menu();
     }
 
