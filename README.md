@@ -7,7 +7,7 @@ This search engine implements inverted index by mapping each words to their resp
 stratigies "ALL", "ANY" and "NONE" respectively. The second option prints all the content of the database. Lastly the third option, you guessed it, exits the program.
 ## Search stratigies
 As mentioned before there are three search stratigies "ALL", "ANY" and "NONE". "ALL" takes certain words as input and searches the database for a line which contains all the contents 
-from the input, for instance: if the input is "ERICK HARRINGTON" then it will serach for content which contains both "ERICK" && "HARRINGTON" (case insensitive). "ANY" searched for a 
+from the input, for instance: if the input is "ERICK HARRINGTON" then it will search for content which contains both "ERICK" && "HARRINGTON" (case insensitive). "ANY" searched for a 
 line which contains any of the contents from the input, for instance: if the input is "Erick Harrington" then it will serach for content which contains either "Erick" || "Harrington". 
 "NONE" makes sure it returns all the contents of the database excluding the contents of the input.
 ### Note
