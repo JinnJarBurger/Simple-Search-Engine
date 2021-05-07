@@ -19,10 +19,8 @@ public class SearchEngine {
 
     private void invertedIndex() {
         // to load the keys
-        database.forEach(line -> {
-            String[] words = line.split("\\s+");
-            Arrays.stream(words).forEach(word -> position.put(word.toLowerCase(), new TreeSet<>(Set.of())));
-        });
+        database.forEach(line -> Arrays.asList(line.split("\\s+")).forEach(word ->
+                position.put(word.toLowerCase(), new TreeSet<>(Set.of()))));
         // to load the values
         IntStream.range(0, database.size()).forEach(index -> position.forEach((word, indices) -> {
             if (database.get(index).toLowerCase().contains(word)) {
