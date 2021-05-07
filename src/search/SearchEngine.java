@@ -32,11 +32,11 @@ public class SearchEngine {
 
     private void searchAll(List<String> matches, String line) {
         Set<Integer> indicesSet = new TreeSet<>();
-        List<String> words = Arrays.asList(line.toLowerCase().split("\\s+"));
-        words.forEach(word -> indicesSet.addAll(position.getOrDefault(word,
-                new TreeSet<>(Collections.emptySet()))));
+        Arrays.asList(line.toLowerCase().split("\\s+")).forEach(word ->
+                indicesSet.addAll(position.getOrDefault(word, new TreeSet<>(Collections.emptySet()))));
         indicesSet.forEach(index -> {
-            if (Arrays.asList(database.get(index).toLowerCase().split("\\s+")).containsAll(words)) {
+            if (Arrays.asList(database.get(index).toLowerCase().split("\\s+")).
+                    containsAll(Arrays.asList(line.toLowerCase().split("\\s+")))) {
                 matches.add(database.get(index));
             }
         });
@@ -44,17 +44,15 @@ public class SearchEngine {
 
     private void searchAny(List<String> matches, String line) {
         Set<Integer> indicesSet = new TreeSet<>();
-        List<String> words = Arrays.asList(line.toLowerCase().split("\\s+"));
-        words.forEach(word -> indicesSet.addAll(position.getOrDefault(word,
-                new TreeSet<>(Collections.emptySet()))));
+        Arrays.asList(line.toLowerCase().split("\\s+")).forEach(word ->
+                indicesSet.addAll(position.getOrDefault(word, new TreeSet<>(Collections.emptySet()))));
         indicesSet.forEach(index -> matches.add(database.get(index)));
     }
 
     private void searchNone(List<String> matches, String line) {
         Set<Integer> indicesSet = new TreeSet<>();
-        List<String> words = Arrays.asList(line.toLowerCase().split("\\s+"));
-        words.forEach(word -> indicesSet.addAll(position.getOrDefault(word,
-                new TreeSet<>(Collections.emptySet()))));
+        Arrays.asList(line.toLowerCase().split("\\s+")).forEach(word ->
+                indicesSet.addAll(position.getOrDefault(word, new TreeSet<>(Collections.emptySet()))));
         IntStream.range(0, database.size()).forEach(i -> {
             if (!indicesSet.contains(i)) {
                 matches.add(database.get(i));
