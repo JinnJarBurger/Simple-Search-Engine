@@ -5,8 +5,8 @@ import java.util.stream.IntStream;
 
 public class SearchEngine {
 
-    private ArrayList<String> database;
-    private Map<String, TreeSet<Integer>> position;
+    private final ArrayList<String> database;
+    private final Map<String, TreeSet<Integer>> position;
 
     SearchEngine(ArrayList<String> database) {
         this.database = database;
@@ -19,23 +19,20 @@ public class SearchEngine {
 
     private void invertedIndex() {
         // to load the keys
-        for (var line : database) {
+        database.forEach(line -> {
             String[] words = line.split("\\s+");
             Arrays.stream(words).forEach(word -> position.put(word.toLowerCase(), new TreeSet<>(Set.of())));
-        }
+        });
         // to load the values
-        for (int i = 0; i < database.size(); i++) {
-            int finalI = i;
-            position.forEach((word, indices) -> {
-                if (database.get(finalI).toLowerCase().contains(word)) {
-                    position.get(word).add(finalI);
-                }
-            });
-        }
+        IntStream.range(0, database.size()).forEach(index -> position.forEach((word, indices) -> {
+            if (database.get(index).toLowerCase().contains(word)) {
+                position.get(word).add(index);
+            }
+        }));
         menu();
     }
 
-    private List<String> searchAll(List<String> matches, String line) {
+    private void searchAll(List<String> matches, String line) {
         Set<Integer> indicesSet = new TreeSet<>();
         List<String> words = Arrays.asList(line.toLowerCase().split("\\s+"));
         words.forEach(word -> indicesSet.addAll(position.getOrDefault(word,
@@ -45,19 +42,17 @@ public class SearchEngine {
                 matches.add(database.get(index));
             }
         });
-        return matches;
     }
 
-    private List<String> searchAny(List<String> matches, String line) {
+    private void searchAny(List<String> matches, String line) {
         Set<Integer> indicesSet = new TreeSet<>();
         List<String> words = Arrays.asList(line.toLowerCase().split("\\s+"));
         words.forEach(word -> indicesSet.addAll(position.getOrDefault(word,
                 new TreeSet<>(Collections.emptySet()))));
         indicesSet.forEach(index -> matches.add(database.get(index)));
-        return matches;
     }
 
-    private List<String> searchNone(List<String> matches, String line) {
+    private void searchNone(List<String> matches, String line) {
         Set<Integer> indicesSet = new TreeSet<>();
         List<String> words = Arrays.asList(line.toLowerCase().split("\\s+"));
         words.forEach(word -> indicesSet.addAll(position.getOrDefault(word,
@@ -67,7 +62,6 @@ public class SearchEngine {
                 matches.add(database.get(i));
             }
         });
-        return matches;
     }
 
     private void findPerson() {
@@ -83,7 +77,7 @@ public class SearchEngine {
         }
         if (!(matches.size() == 0)) {
             System.out.printf("%n%d persons found:%n", matches.size());
-            matches.forEach(person -> System.out.println(person));
+            matches.forEach(System.out::println);
         } else {
             System.out.println("No matching people found.");
         }
@@ -91,7 +85,7 @@ public class SearchEngine {
 
     private void printDatabase() {
         System.out.printf("%n=== List of people ===%n");
-        database.forEach(people -> System.out.println(people));
+        database.forEach(System.out::println);
     }
     
     private void menu() {
